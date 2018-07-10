@@ -1,8 +1,8 @@
-(ns search-engine-clj.db.postgresql
+(ns contacts-api.db.postgresql
   (:require [hugsql.core :as hugsql]
             [hugsql.adapter.clojure-java-jdbc :as adp]
             [clojure.data.json :as json]
-            [search-engine-clj.config :as config])
+            [contacts-api.config :as config])
   (:import (java.util UUID)
            (org.postgresql.util PGobject)))
 

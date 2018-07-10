@@ -1,4 +1,4 @@
-(ns search-engine-clj.response
+(ns contacts-api.response
   (:import (java.util Date)))
 
 (def codes

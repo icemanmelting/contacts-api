@@ -13,8 +13,8 @@ RUN export JAVA_HOME
 
 WORKDIR /app
 
-ADD ./target/uberjar/search-engine-standalone.jar /app/search-engine-standalone.jar
+ADD ./target/uberjar/contacts-api-standalone.jar /app/contacts-api-standalone.jar
 
-ENTRYPOINT ["java", "-jar", "/app/search-engine-standalone.jar"]
+ENTRYPOINT ["java", "-jar", "/app/contacts-api-standalone.jar"]
 
 EXPOSE 8080

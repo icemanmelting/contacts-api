@@ -2,9 +2,9 @@
 lein clean
 
 if lein uberjar; then
-    docker build -t search-engine .
+    docker build -t contacts-api .
     echo "Docker image build successfully. Running..."
-    docker run -e SEARCH_ENGINE_ENV=default  -it --rm -p 8080:8080  search-engine
+    docker run -e CONTACTS_API_ENV=default  -it --rm -p 8080:8080  contacts-api
 else
     echo "Cannot compile"
 fi
