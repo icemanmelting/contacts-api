@@ -31,9 +31,9 @@
 
 
 (defroutes session-routes
-           (POST "/session" [] (render sessions/create))
-           (GET "/session" [] (authorize (render sessions/find-one)))
-           (DELETE "/session" [] (authorize (render sessions/destroy))))
+           (POST "/user/sessions" [] (render sessions/create))
+           (GET "/user/sessions" [] (authorize (render sessions/find-one)))
+           (DELETE "/user/sessions" [] (authorize (render sessions/destroy))))
 
 (defroutes app
            (-> (routes session-routes users-routes (authorize contacts-routes)) wrap-json-body wrap-json-response wrap-cors))

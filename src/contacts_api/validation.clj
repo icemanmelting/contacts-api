@@ -1,4 +1,4 @@
-(ns search-engine-clj.validation
+(ns contacts-api.validation
   (:require [schema.core :as sc]
             [clojure.string :as cs]
             [search-engine-clj.config :as config])

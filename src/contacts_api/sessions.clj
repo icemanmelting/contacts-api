@@ -11,8 +11,8 @@
 
 (defn- uuid-from-header [r]
   (when-let [auth (get-in r [:headers "authorization"])]
-    (when (> (count auth) 7)
-      (uuid (subs auth 7)))))
+    (when (> (count auth) 6)
+      (uuid (subs auth 6)))))
 
 (defn sha-256 [& args]
   (let [s (s/join (map #(str % "&||&") args))
