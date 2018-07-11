@@ -17,6 +17,7 @@
                  [com.layerware/hugsql "0.4.8"]
                  [com.googlecode.libphonenumber/libphonenumber "8.8.0"]]
   :main contacts-api.core
+  :target-path "target/%s"
   :uberjar-name "contacts-api-standalone.jar"
   :profiles {:uberjar {:aot :all}
              :dev {:dependencies [[ring-mock/ring-mock "0.1.5"]]}})
