@@ -14,7 +14,8 @@
                  [ring/ring-json "0.4.0" :exclusions [clj-time]]
                  [ring-cors "0.1.9"]
                  [org.postgresql/postgresql "42.1.4"]
-                 [com.layerware/hugsql "0.4.8"]]
+                 [com.layerware/hugsql "0.4.8"]
+                 [com.googlecode.libphonenumber/libphonenumber "8.8.0"]]
   :main contacts-api.core
   :uberjar-name "contacts-api-standalone.jar"
   :profiles {:uberjar {:aot :all}

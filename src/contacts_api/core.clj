@@ -22,9 +22,9 @@
 (defroutes contacts-routes
   (GET "/contacts" [] (render contacts/list-all))
   (POST "/contacts" [] (render contacts/create))
-  (POST "/contacts/:id" [] (render contacts/update-name))
+  (PUT "/contacts/:id" [] (render contacts/update-name))
   (DELETE "/contacts/:id" [] (render contacts/delete))
-  (POST "/contacts:id/entries" [] (render contacts/add-phone)))
+  (POST "/contacts/:id/entries" [] (render contacts/add-phone)))
 
 (defroutes users-routes
   (POST "/user" [] (render users/create)))

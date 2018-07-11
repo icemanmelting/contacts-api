@@ -55,7 +55,7 @@
 
 (defn one
   ([st ts d]
-   (apply array-map :api_status (or (codes st) st) :api_timestamp ts (apply concat d)))
+   (array-map :status (or (codes st) st) :data (apply array-map (apply concat d))))
   ([st d]
    (one st (Date.) d)))
 
@@ -63,11 +63,7 @@
   ([st ts col offset total]
    (let [c (count col)
          next (if offset (+ offset c))]
-     (array-map :metadata {:more_results (boolean (if next (> total next)))
-                           :next_offset (or next c)
-                           :count c
-                           :total (or total c)}
-                :results (map #(one st ts %) col))))
+     {:data (map #(apply array-map (apply concat %)) col) :status (or (codes st) st)}))
   ([st col offset total]
    (many st (Date.) col offset total))
   ([st col]
@@ -76,8 +72,8 @@
 (defn error [st m]
   (one st {:api_message m}))
 
-(defn response [b]
-  {:body b :status (or (:api_status b) 200)})
+(defn response [{b :data st :status}]
+  {:body b :status (or st 200)})
 
 (defn render [h]
   #(response(h %)))

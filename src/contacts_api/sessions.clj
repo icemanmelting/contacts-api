@@ -1,6 +1,7 @@
 (ns contacts-api.sessions
   (:require [clojure.string :as s]
             [clojure.tools.logging :as log]
+            [clojure.set :refer [rename-keys]]
             [schema.core :as sc]
             [contacts-api.validation :refer [validate humanize-error non-empty-str]]
             [contacts-api.response :refer [response error one]]
@@ -10,9 +11,8 @@
            (java.security MessageDigest)))
 
 (defn- uuid-from-header [r]
-  (when-let [auth (get-in r [:headers "authorization"])]
-    (when (> (count auth) 6)
-      (uuid (subs auth 6)))))
+  (when-let [auth (get-in r [:headers "token"])]
+    (uuid auth)))
 
 (defn sha-256 [& args]
   (let [s (s/join (map #(str % "&||&") args))
@@ -26,7 +26,7 @@
   (let [[session err] (find-session db {:id id})]
     (when err
       (log/error err "Cannot lookup for a session in Postgres" id))
-    session))
+    (rename-keys session {:id :token})))
 
 (defn find-one [{session :session}]
   (one :ok session))
