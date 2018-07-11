@@ -170,7 +170,22 @@
 
     (let [all-contacts (all-contacts-by-owner owner)
           id1-contact (-> (group-by :id all-contacts) (get id1) first)]
-      (is (= phone-number (:phone id1-contact)))))
+      (is (= phone-number (:phone id1-contact))))
+
+    (do (set-authorized-requests!)
+        (web-run :post (str "/contacts/" id1 "/entries") {:phone phone-number}))
+
+    (is (= 422 (:status @resp)))
+    (is (= {:api_message (str "Problem inserting entry for contact " id1)} (extract-body)))
+
+    (do (set-authorized-requests!)
+        (web-run :post (str "/contacts/" id2 "/entries") {:phone phone-number}))
+
+    (is (= 201 (:status @resp)))
+
+    (let [all-contacts (all-contacts-by-owner owner)
+          id2-contact (-> (group-by :id all-contacts) (get id2) first)]
+      (is (= phone-number (:phone id2-contact)))))
 
   (testing "missing body params"
 
