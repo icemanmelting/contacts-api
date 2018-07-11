@@ -1,10 +1,10 @@
-(ns search-engine-clj.config
+(ns contacts-api.config
   (:require [clojure.java.io :refer [resource as-file]]
             [aero.core :refer [read-config]]))
 
 (set! *warn-on-reflection* true)
 
-(def profile (keyword (System/getenv "SEARCH_ENGINE_ENV")))
+(def profile (keyword (System/getenv "CONTACTS_API_ENV")))
 
 (defn read-from-file [f & ks]
   (let [c (read-config f {:profile profile})]
@@ -21,5 +21,3 @@
     (apply read-from-resource n ks)))
 
 (def db (read-from-resource "db.edn"))
-
-

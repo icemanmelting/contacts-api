@@ -1,9 +1,9 @@
 #!/bin/sh
-rm search-engine.zip
+rm contacts-api.zip
 lein clean
 
 if lein uberjar; then
-    zip -r search-engine.zip Dockerfile* ./resources/* ./target/uberjar/search-engine-standalone.jar
+    zip -r contacts-api.zip Dockerfile* ./resources/* ./target/uberjar/contacts-api-standalone.jar
     echo "ZIP created successfully"
 else
     echo "Cannot create ZIP"
