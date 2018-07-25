@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+        body { font-family: 'Droid Serif'; }
+        h1, h2, h3 {
+            font-family: 'Yanone Kaffeesatz';
+            font-weight: normal;
+        }
+        .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+        .image-20 img { width: 20%; }
+        .image-30 img { width: 30%; }
+        .image-40 img { width: 40%; }
+        .image-50 img { width: 50%; }
+        .image-60 img { width: 60%; }
+        .image-70 img { width: 70%; }
+        .image-80 img { width: 80%; }
+        .image-90 img { width: 90%; }
+    </style>
+</head>
+<body>
+<textarea id="source">class: center, middle
+
+## Contacts API
+# Presentation
+
+Fabio Dias Francisco
+
+---
+## Design
+.center.image-90[![Branches](presentation/design.jpeg)]
+
+
+---
+##Design
+
+- Used sessions integrated with user login;
+- Session object is passed on every request body;
+- Easier to query for contacts from that user only, instead of manipulating all contacts;
+- Entries as another table with the contact id as foreign key;
+- Left joining in the query, shows entries if available, but still returns the contact (even if no entries available);
+---
+
+##Testing
+
+In testing it is important to always check the normal operation of the API.
+
+- Cases where everything should be ok;
+- Cases where everything goes wrong;
+- Edge cases - check if the behaviour of the API is the expected one for extreme cases (like multiple contacts with the same phone number,
+or no repeated numbers for the same contact;
+
+Of course TDD, develop tests as the application itself is developed. In Clojure this is made easier by the Interactivity of the REPL.
+
+I am a Clojure evangelist!!!
+
+ .center.image-40[![Branches](presentation/Clojure-logo.png)]
+---
+##Error Management
+
+- Error logging;
+- Http error status with significant message;
+- Possible usage of DB to save errors, but rarely used, only if critical;
+- Usually deployed to the cloud (AWS, Azure, etc), platforms have log savers in place (EBS, etc).
+---
+##Performance
+600k concurrent connections possible with http-kit:
+
+http://www.http-kit.org/blog.html
+
+Reliable - Can use jetty handlers if desired
+---
+##Concurrency
+- State is kept by database;
+- If needed the persistent data nature of clojure can make it possible to update data safely with atoms;
+- Further concurrency with Redis caching;
+- If not enough, sessions can be limited to a single instance per user.
+---
+##Demo
+#Docker Container running application
+#Postman Requests
+</textarea>
+<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+</script>
+<script>
+    var slideshow = remark.create();
+</script>
+</body>
+</html>
