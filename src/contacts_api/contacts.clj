@@ -52,16 +52,26 @@
 (defn update-name [{body :body {:keys [login]} :session {:keys [id]} :params}]
   (let [[_ err] (validate contacts-update-fmt body)]
     (if-not err
-      (let [[_ err] (update-contact db (assoc body :id id :owner login))]
+      (let [[c err] (select-all-contacts-by-user db {:owner login})]
         (if-not err
-          (one :ok {:id id})
-          (error-message (str "Problem updating contact for user" login) err)))
+          (if (seq (filter #(= (uuid id) (:id %)) c))
+            (let [[_ err] (update-contact db (assoc body :id id :owner login))]
+              (if-not err
+                (one :ok {:id id})
+                (error-message (str "Problem updating contact for user" login) err)))
+            (error :unprocessable-entity "Contact doesn't exist"))
+          (error-message (str "Problem deleting contact " id) err)))
       (error :unprocessable-entity (humanize-error err)))))
 
 (defn delete [{{:keys [login]} :session {:keys [id]} :params}]
-  (let [[_ err] (delete-contact db {:id id :owner login})]
+  (let [[c err] (select-all-contacts-by-user db {:owner login})]
     (if-not err
-      (one :no-content {:api_message (str "Contact deleted: " id)})
+      (if (seq (filter #(= (uuid id) (:id %)) c))
+        (let [[_ err] (delete-contact db {:id id :owner login})]
+          (if-not err
+            (one :no-content {:api_message (str "Contact deleted: " id)})
+            (error-message (str "Problem deleting contact " id) err)))
+        (error :unprocessable-entity "Contact doesn't exist"))
       (error-message (str "Problem deleting contact " id) err))))
 
 (defn add-phone [{{:keys [phone region] :as body} :body {:keys [id]} :params}]

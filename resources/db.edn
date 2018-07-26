@@ -1,4 +1,4 @@
-{:postgresql #profile {:default {:hostname "docker.for.win.localhost"
+{:postgresql #profile {:default {:hostname "localhost"
                                  :port 5432
                                  :database "contacts_api_test"
                                  :user "postgres"

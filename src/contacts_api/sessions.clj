@@ -48,7 +48,7 @@
 
 (defn- live? [s]
   (if-let [seen (:seen s)]
-    (> (+ (.getTime seen) 3600000) (System/currentTimeMillis))
+    (> (+ (.getTime seen) 36000000) (System/currentTimeMillis))
     false))
 
 (defn authorize [handler]
