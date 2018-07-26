@@ -78,7 +78,7 @@ Reliable - Can use jetty handlers if desired
 ---
 ##Concurrency
 - State is kept by database;
-- If needed the persistent data nature of clojure can make it possible to update data safely with atoms;
+- If needed the persistent data nature of clojure can make it possible to update data safely refs and transactions(https://clojure.org/reference/refs);
 - Further concurrency with Redis caching;
 - If not enough, sessions can be limited to a single instance per user.
 ---
