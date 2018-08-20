@@ -13,6 +13,7 @@ jobs: # basic units of work in a run
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: contacts_api_test
+          POSTGRES_PASSWORD: postgres
 
     steps: # commands that comprise the `build` job
     - checkout # check out source code to working directory
@@ -27,6 +28,9 @@ jobs: # basic units of work in a run
         - ~/.m2
         - ~/.lein
         key: contacts-api-{{ checksum "project.clj" }}
+
+
+    - run: psql -U postgres -d contacts_api_test -a -f ~/contacts-api/resources/postgres-schema.sql
 
     - run: lein do test, uberjar
 
