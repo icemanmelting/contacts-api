@@ -25,13 +25,8 @@ jobs: # basic units of work in a run
     - save_cache: # generate and store cache in the .m2 directory using a key template
         paths:
         - ~/.m2
+        - ~/.lein
         key: contacts-api-{{ checksum "project.clj" }}
-
-    - run:
-      name: Database Setup
-      command: |
-        bundle exec rake db:create
-        bundle exec rake db:structure:load
 
     - run: lein do test, uberjar
 
