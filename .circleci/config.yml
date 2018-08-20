@@ -31,7 +31,18 @@ jobs: # basic units of work in a run
 
     - run: sudo apt install -y postgresql-client || true
 
-    - run: psql -U postgres -d contacts_api_test -a -f ~/contacts-api/resources/postgres-schema.sql
+    - run:
+        name: Waiting for PostgreSQL to start
+        command: |
+          for i in `seq 1 10`;
+          do
+            nc -z localhost 5432 && echo Success && exit 0
+            echo -n .
+            sleep 2
+          done
+          echo Failed waiting for Postgres && exit 1
+
+    - run: psql -U postgres -h localhost -p 5432 -d contacts_api_test -a -f ~/contacts-api/resources/postgres-schema.sql
 
     - run: lein do test, uberjar
 
